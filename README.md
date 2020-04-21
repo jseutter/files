@@ -1,2 +1,2 @@
-# filez
+# files
 Files for public consumption
