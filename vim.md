@@ -13,3 +13,6 @@ on visual block.
 
 ### Enable highlighting for mouse copy and paste
 :set mouse=r
+
+### Show line numbers
+:set number
