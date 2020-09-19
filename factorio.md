@@ -1,4 +1,9 @@
 # Factorio blueprints
 
+## Starting game
+### Starting miners
+
+0eNqdktFqwzAMRX8l6NkpS2snbX6jj2MMJxFF4DjGdkdD8L9PTSAMmlK6N8lI517kO0Fjrug82Qj1BB2G1pOLNFio4Ry1j2Qv2UX3mPVk0QcQQO1gA9SfEwS6WG3ui3F0yBsUsecJy/PcocE2empzXmVM3nkyBhITbIc3qIv0JQBtpEi4AOdm/LbXvkHPAysq9NqYfAW6wSDruCHQ4nUC5uXqsFMCRq7kaadSEg/E/QtzG8xiZR6ZKaAjz5vzxH5D4bAqRK9tcIOPeYMmbqDvJp+h5QZavm1eVs8Vyg0F9ebBpXp18PJf56gez8FRmdNV/0msAKMZxm9LOLNbVvDjD5fL/xwLWclTVVbFR6nKlH4B2nz1qg==
+
 ## Every type of concrete
 
