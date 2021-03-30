@@ -15,3 +15,10 @@ defaults write -g ApplePressAndHoldEnabled -bool false
 This setting won't take effect until you log out and back in to
 OS X.
 
+## xcrun error when running git
+
+OS X updated and broke everything like usual:
+xcrun: error: invalid active developer path (/Library/Developer/CommandLineTools), missing xcrun at: /Library/Developer/CommandLineTools/usr/bin/xcrun
+
+Run `xcode-select --install` to fix.
+

@@ -7,3 +7,6 @@ https://git@github.com/<more_stuff>.  Modify the url
 to be git@github.com:<more_stuff> to clone using ssh.
 Simple but hard to find.
 
+### View older version of a file without checkout
+
+git show REVISION:/path/to/file
