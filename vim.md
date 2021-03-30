@@ -16,3 +16,8 @@ on visual block.
 
 ### Show line numbers
 :set number
+
+### Convert DOS to Unix line endings
+:set ff? to query
+:set ff=unix or dos or mac
+
