@@ -21,3 +21,6 @@ on visual block.
 :set ff? to query
 :set ff=unix or dos or mac
 
+### Enable syntax highlighting
+:syntax on
+
