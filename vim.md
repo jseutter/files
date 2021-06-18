@@ -24,3 +24,9 @@ on visual block.
 ### Enable syntax highlighting
 :syntax on
 
+### Macro record and use
+Record with q<letter><commands>q
+Use with <number>@<letter>
+
+A common use is to execute the macro once, then just repeat
+the last command with '.'.
