@@ -27,6 +27,7 @@ on visual block.
 ### Macro record and use
 Record with q<letter><commands>q
 Use with <number>@<letter>
+Repeat last macro with @@
 
-A common use is to execute the macro once, then just repeat
-the last command with '.'.
+If you find macro repetition problematic, :map , @@ to make
+the comma key act like '.'.
