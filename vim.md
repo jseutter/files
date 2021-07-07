@@ -16,3 +16,18 @@ on visual block.
 
 ### Show line numbers
 :set number
+
+### Convert DOS to Unix line endings
+:set ff? to query
+:set ff=unix or dos or mac
+
+### Enable syntax highlighting
+:syntax on
+
+### Macro record and use
+Record with q<letter><commands>q
+Use with <number>@<letter>
+Repeat last macro with @@
+
+If you find macro repetition problematic, :map , @@ to make
+the comma key act like '.'.
