@@ -31,3 +31,11 @@ Repeat last macro with @@
 
 If you find macro repetition problematic, :map , @@ to make
 the comma key act like '.'.
+
+### Taking notes
+Use vim-notes plugin, configured with Vundle
+
+### Navigating
+Move forward to another file with 'gf'
+Go back with Ctrl-6, or Ctrl-O Ctrl-O
+
