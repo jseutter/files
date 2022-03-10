@@ -12,7 +12,6 @@ https://incognitjoe.github.io/adding-certs-to-requests.html
 ## Printing exception tracebacks
 ```
 import traceback
-import sys
 
 try:
     1/0
