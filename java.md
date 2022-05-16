@@ -31,7 +31,8 @@ mvnw spring-boot:run
 ### Building with Gradle
 
 gradlew tasks
-gradlew build
+
+gradlew build or gradlew war to build just the war file
 
 ### Running Code in Jboss EAP
 
