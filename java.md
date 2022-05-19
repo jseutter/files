@@ -34,6 +34,10 @@ gradlew tasks
 
 gradlew build or gradlew war to build just the war file
 
+### Running SpringBoot project with gradle
+
+gradlew bootRun
+
 ### Running Code in Jboss EAP
 
 Download Jboss EAP from access.redhat.com
