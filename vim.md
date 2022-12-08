@@ -15,7 +15,7 @@ on visual block.
 :set number
 
 ### Edit yaml files
-:set ts=2 sw=2 sts=2 expandtab lines
+:set ts=2 sw=2 sts=2 expandtab number
 
 
 ### Convert DOS to Unix line endings
