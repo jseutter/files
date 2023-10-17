@@ -45,4 +45,7 @@ ssh -L 8888:127.0.0.1:8888 crc-machine.local
 Finally in firefox, make 127.0.0.1 port 8888 be your proxy, and enable for https as well.  This leaves
 Chrome untouched for regular browsing.
 
+Decoding secrets:
+kubectl get secret name-of-secret -o go-template='
+{{range $k,$v := .data}}{{printf "%s: " $k}}{{if not $v}}{{$v}}{{else}}{{$v | base64decode}}{{end}}{{"\n"}}{{end}}'
 
