@@ -17,6 +17,8 @@ on visual block.
 ### Edit yaml files
 :set ts=2 sw=2 sts=2 expandtab number
 
+### Case insensitive search
+:set ignorecase
 
 ### Convert DOS to Unix line endings
 :set ff? to query
