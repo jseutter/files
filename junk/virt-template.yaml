@@ -1,0 +1,56 @@
+apiVersion: template.openshift.io/v1
+kind: Template
+metadata:
+  name: vm-template-with-pvc
+  annotations:
+    description: Template for creating a VM that uses an existing PVC
+objects:
+  - apiVersion: kubevirt.io/v1
+    kind: VirtualMachine
+    metadata:
+      name: ${VM_NAME}
+    spec:
+      running: false
+      template:
+        metadata:
+          labels:
+            kubevirt.io/domain: ${VM_NAME}
+        spec:
+          domain:
+            devices:
+              disks:
+                - name: pvc-disk
+                  disk:
+                    bus: virtio
+                - name: cloudinitdisk
+                  disk:
+                    bus: virtio
+            resources:
+              requests:
+                memory: ${MEMORY}
+          volumes:
+            - name: pvc-disk
+              persistentVolumeClaim:
+                claimName: ${PVC_NAME}
+            - name: cloudinitdisk
+              cloudInitNoCloud:
+                userData: |
+                  #cloud-config
+                  hostname: ${VM_NAME}
+                  user: cloud-user
+                  password: ${VM_PASSWORD}
+                  chpasswd: { expire: False }
+parameters:
+  - name: VM_NAME
+    description: Name of the Virtual Machine
+    required: true
+  - name: MEMORY
+    description: Memory size for the Virtual Machine (e.g., 2Gi)
+    value: 2Gi
+  - name: PVC_NAME
+    description: Name of the existing PersistentVolumeClaim to use
+    required: true
+  - name: VM_PASSWORD
+    description: Root password for the VM
+    generate: expression
+    from: "[a-zA-Z0-9]{12}"
