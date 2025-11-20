@@ -96,11 +96,11 @@ qemu-system-x86_64 -nographic -kernel arch/x86/boot/bzImage \
     -initrd initrd.img -append "console=ttyS0 rdinit=/sbin/init"
 ```
 
-- A make defconfig kernel doesn't create a vmlinuz, just a vmlinux.  I had to switch to using bzImage instead.
+- A ```make defconfig``` kernel doesn't create a vmlinuz, just a vmlinux.  I had to switch to using bzImage instead.
 - I dropped the port forwarding for now, I'll add it back later.
-- console=ttyS0 - I'm not sure why this is here, perhaps test without it?
-- rdinit=/sbin/init.  When I look at the source it looks like the kernel should try this path, but it doesn't.
-  For reference, /sbin/init exists in initrd.img and is the first thing to run after the kernel boots.
+- ```console=ttyS0``` - I'm not sure why this is here, perhaps test without it?
+- ```rdinit=/sbin/init```.  When I look at the source it looks like the kernel should try this path, but it doesn't.
+  For reference, ```/sbin/init``` exists in initrd.img and is the first thing to run after the kernel boots.
 
 At any rate, I can now test a mainline linux kernel quickly without trashing my development system.  Success!
 
