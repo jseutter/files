@@ -92,7 +92,8 @@ The kernel newbies image I used is a few years old and a few things have changed
 machine, I had to use this:
 
 ```
-qemu-system-x86_64 -nographic -kernel arch/x86/boot/bzImage -initrd initrd.img -append "console=ttyS0 rdinit=/sbin/init"
+qemu-system-x86_64 -nographic -kernel arch/x86/boot/bzImage \
+    -initrd initrd.img -append "console=ttyS0 rdinit=/sbin/init"
 ```
 
 - A make defconfig kernel doesn't create a vmlinuz, just a vmlinux.  I had to switch to using bzImage instead.
