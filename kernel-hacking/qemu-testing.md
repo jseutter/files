@@ -9,7 +9,7 @@ For reference, here is the qemu command:
 ```qemu-system-x86_64 -nographic -kernel vmlinux -initrd initrd.img -nic user,model=rtl8139,hostfwd=tcp::5555-:23```
 
 The two things it specifies are vmlinux, the kernel I just built, and initrd.img,
-which is always used when booting a kernel.  It's some sort of magic.
+which is always used when booting a kernel.  initrd.img looks like some kind of magic.
 
 Turns out initrd.img is a filesystem.  It is compressed with gzip, and is a cpio archive.
 To look at it:
@@ -50,18 +50,18 @@ telnetd -l /bin/sh
 acpid
 ```
 
-Mounting the proc filesystem provides the ability to get infromation about tasks in /proc.
-Mounting the sysfs filesystem gives information about hardware devices in /sys, which
-is used by things like udev or ifconfig.
-Mounting the devtmpfs filesystem gives functionality about devices, so like /dev/tty,
-/dev/sda and so on.
-The /dev/pts are the pseudo-terminals, which are needed for virtual terminals.
-The lo and eth0 lines are for the loopback device and requesting a dhcp address from
-the qemu networking service.
-The telnetd line starts the telnet daemon, so that when something connects it starts
-up a shell session.
-The acpid line isn't strictly needed, but listens for power events from qemu.  Most
-of the time I just use ```poweroff``` from the terminal instead.
+- Mounting the proc filesystem provides the ability to get infromation about tasks in /proc.
+- Mounting the sysfs filesystem gives information about hardware devices in /sys, which
+  is used by things like udev or ifconfig.
+- Mounting the devtmpfs filesystem gives functionality about devices, so like /dev/tty,
+  /dev/sda and so on.
+- The /dev/pts are the pseudo-terminals, which are needed for virtual terminals.
+- The lo and eth0 lines are for the loopback device and requesting a dhcp address from
+  the qemu networking service.
+- The telnetd line starts the telnet daemon, so that when something connects it starts
+  up a shell session.
+- The acpid line isn't strictly needed, but listens for power events from qemu.  Most
+  of the time I just use ```poweroff``` from the terminal instead.
 
 The result of this is you can test a kernel in a few seconds:
 
@@ -84,6 +84,22 @@ Linux (none) 6.3.0+ #19 SMP Wed Nov 12 03:16:19 UTC 2025 x86_64 GNU/Linux
 ```
 
 Armed with this knowledge, I should be able to take this initrd file to any computer and quickly test
-a built linux kernel..
+a built linux kernel.
 
+## Testing
+
+The kernel newbies image I used is a few years old and a few things have changed.  On an Ubuntu 25.10 development
+machine, I had to use this:
+
+```
+qemu-system-x86_64 -nographic -kernel arch/x86/boot/bzImage -initrd initrd.img -append "console=ttyS0 rdinit=/sbin/init"
+```
+
+- A make defconfig kernel doesn't create a vmlinuz, just a vmlinux.  I had to switch to using bzImage instead.
+- I dropped the port forwarding for now, I'll add it back later.
+- console=ttyS0 - I'm not sure why this is here, perhaps test without it?
+- rdinit=/sbin/init.  When I look at the source it looks like the kernel should try this path, but it doesn't.
+  For reference, /sbin/init exists in initrd.img and is the first thing to run after the kernel boots.
+
+At any rate, I can now test a mainline linux kernel quickly without trashing my development system.  Success!
 
