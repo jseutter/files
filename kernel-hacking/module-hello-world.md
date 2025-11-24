@@ -32,4 +32,42 @@ I had to do this:
 Once I had this done, I booted up my kernel in qemu and was able to insmod/rmmod
 the module.  Success!
 
+# Understanding the build process
+
+I don't understand how this Makefile works:
+
+```
+obj-m += hello-2.o
+
+TARGET_KERNEL_DIR := ../linux
+
+PWD := $(CURDIR)
+
+all:
+        $(MAKE) -C $(TARGET_KERNEL_DIR) M=$(PWD) modules
+clean:
+        $(MAKE) -C $(TARGET_KERNEL_DIR) M=$(PWD) clean
+```
+
+..and I invoke it with ```make```.  How does it know I'm building a kernel module?
+
+The answer is, it sort of doesn't know.  All it is doing is executing the all: target.
+```make -C ../linux``` tells make to change to that directory and act as
+if I invoked it from that directory.  ```../linux``` is my source tree and has all
+the fancy Makefile stuff for building the kernel.  Ah!
+
+The next arg, ```M=hello-world-module```, tells make to compile the source files
+in my current directory (where my module source files are).
+
+But this highlights something I never figured out in 30 years of casual Make usage:
+when make recursively calls itself, the variables found by the current make process
+get passed into the child make process.  Apparently this has been the case since
+approximately forever.
+
+The M= and obj-m= variables are part of the linux Kbuild system.
+
+Note that kbuild has documentation in the kernel source tree.  See
+Documentation/kubild/makefiles.rst and search for "obj-m".  "obj-y"
+apparently compiles it into the kernel.  I don't think it's a coincidence that
+these letters match the ones in ```make menuconfig```.
 

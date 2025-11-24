@@ -104,3 +104,63 @@ qemu-system-x86_64 -nographic -kernel arch/x86/boot/bzImage \
 
 At any rate, I can now test a mainline linux kernel quickly without trashing my development system.  Success!
 
+
+## Workflow Improvements
+
+I quickly found that testing kernel modules is a pain with this setup.  To test, you have to:
+
+- Compile module
+- Uncompress initrd.img, add the file, recompress initrd.img
+- Boot kernel and test
+
+This second step is a pain, even with a script to automated it.  Let's have our test kernel mount our
+kernel sources.  This is a three-step process - the kernel needs to support it, qemu needs to know
+about our share, and our initrd.img needs to mount the share we configured in qemu.
+
+### Step the first, Linux kernel support
+
+If you're testing with a minimal kernel, a few of these settings will need to be added.  I configured
+them into the kernel rather than making them modules:
+
+Dependencies for the below:
+CONFIG_VIRTIO
+CONFIG_FUSE_FS
+
+The plan 9 filesystem:
+CONFIG_NET_9P
+CONFIG_9P_NFS
+CONFIG_VIRTIO_FS
+
+Then build the kernel
+
+### Step the second - test with qemu
+
+```
+qemu-system-x86_64 -nographic -kernel arch/x86/boot/bzImage -initrd initrd.img -append "console=ttyS0 rdinit=/sbin/init" \
+        -fsdev local,id=myfs,path=/home/jseutter/projects/linux,security_model=none \
+        -device virtio-9p-pci,fsdev=myfs,mount_tag=src_share
+```
+
+The -fsdev and -device options are added in this invocation.  Together, they specify that my kernel
+sources are in ```/home/jseutter/projects/linux``` and that this should be made available in qemu as ```src_share```
+
+Run qemu, and you should be able to do the following inside the vm:
+
+```
+mkdir /linux
+mount -t 9p src_share /linux
+ls -al /linux
+```
+
+If that works, great!  The kernel and qemu are working together.  Let's make it permanent
+
+### Step the third - add to initrd.img
+
+To make it permanent we have to uncompress initrd.img and updated, then recompress.  I explained
+how to do that at the top of this document.  The file we need to update is ```etc/init.d/rcS```
+and we add the ```mount -t 9p src_share /linux``` line to the end of the file.
+
+Also remember to create the linux folder so it gets bundled into your image.  Then test!
+
+
+
