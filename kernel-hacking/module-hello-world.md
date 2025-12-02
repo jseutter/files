@@ -16,7 +16,8 @@ Some notable facts:
 
 Their example worked well enough on my Ubuntu 25.10 system.
 
-Note: link to source file and makefile here.
+Source file: https://github.com/jseutter/kernel-hacking/blob/main/hello-world-module/hello-2.c
+Makefile: https://github.com/jseutter/kernel-hacking/blob/main/hello-world-module/Makefile-for-host-os-compile
 
 Testing it, I was able to insmod and rmmod successfully on my system.  However, for
 my serious development I want to test the module against a current kernel in qemu.
@@ -24,8 +25,8 @@ I had to do this:
 
 - Change the Makefile with the path to my kernel tree.
 - Fix module initialization.  The init_module() and cleanup_module() functions are no
-  longer supported and have been replaced by more flexible macros called ```__init``` and
-  ```__exit```
+  longer supported and have been replaced by functions called ```module_init(fun_name)``` and
+  ```module_exit(fun_name)```
 - Copy the .ko module into my initrd.img
 
 
@@ -34,7 +35,7 @@ the module.  Success!
 
 # Understanding the build process
 
-I don't understand how this Makefile works:
+I don't understand how this Makefile for my out-of-tree driver works:
 
 ```
 obj-m += hello-2.o
@@ -62,12 +63,13 @@ in my current directory (where my module source files are).
 But this highlights something I never figured out in 30 years of casual Make usage:
 when make recursively calls itself, the variables found by the current make process
 get passed into the child make process.  Apparently this has been the case since
-approximately forever.
+approximately forever.  The recursively-called make in the ../linux directory knows
+how to do proper compilation.  Elegant!
 
-The M= and obj-m= variables are part of the linux Kbuild system.
+The ```M=``` and ```obj-m=``` variables are part of the linux Kbuild system.
 
 Note that kbuild has documentation in the kernel source tree.  See
 Documentation/kubild/makefiles.rst and search for "obj-m".  "obj-y"
-apparently compiles it into the kernel.  I don't think it's a coincidence that
-these letters match the ones in ```make menuconfig```.
+apparently compiles it into the kernel.  These letters match the ones in ```make menuconfig```,
+where 'y' means to compile it into the kernel, and 'm' means build it as a module.
 
