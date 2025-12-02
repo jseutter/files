@@ -16,7 +16,7 @@ Some notable facts:
 
 Their example worked well enough on my Ubuntu 25.10 system.
 
-Source file: https://github.com/jseutter/kernel-hacking/blob/main/hello-world-module/hello-2.c
+Source file: https://github.com/jseutter/kernel-hacking/blob/main/hello-world-module/hello-2.c<br>
 Makefile: https://github.com/jseutter/kernel-hacking/blob/main/hello-world-module/Makefile-for-host-os-compile
 
 Testing it, I was able to insmod and rmmod successfully on my system.  However, for
